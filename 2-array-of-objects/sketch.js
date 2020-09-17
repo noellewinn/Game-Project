@@ -9,7 +9,7 @@ function setup() {
 }
 
 function draw(){
-	background(220);
+	background(200,250,300);
 
 //	draw all the balls in that array
 	for (let i = 0; i < balls.length; i++) {
