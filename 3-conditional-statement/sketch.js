@@ -4,9 +4,11 @@ let balls = [];
 //create a variable to hold your avatar
 let me;
 
+let hits = [];
+
 
 function setup() {
-  createCanvas(500, 400);
+  createCanvas(600, 400);
 
   //make one avatar called me
   me = new Avatar(width/2, 300, 3);
@@ -14,12 +16,12 @@ function setup() {
 }
 
 function draw(){
-	background(220);
+	background(120);
 
   me.drawMe();
   me.moveMe();
 
-  if (frameCount % 15 == 0) {
+  if (frameCount % 25 == 0) {
       let  b = new Ball(width, random(0,height), -3);
       balls.push(b);
       console.log(balls); //print the balls array to the console
@@ -31,6 +33,7 @@ function draw(){
        	  balls[i].moveBall();
         	balls[i].bounceBall();
 	  }
+    me.die();
 
 }
 
@@ -44,25 +47,16 @@ class Avatar {
 	}
 
 	drawMe(){  // draw the running person
-    		stroke("red");
-        strokeWeight(3);
-    		fill("black");
+    		stroke(200, 150,210);
+        strokeWeight(5);
+    		fill(180,200,250);
 		    ellipse(this.x,this.y,20,20);
-        line(this.x,this.y, this.x, this.y+40);
+        line(this.x,this.y+10, this.x, this.y+40);
         line(this.x, this.y+40, this.x-20, this.y+60);
         line(this.x, this.y+40, this.x+10, this.y+50);
         line(this.x+10, this.y+50, this.x+5, this.y+60);
         line(this.x, this.y+15, this.x-10, this.y+25);
         line(this.x-10, this.y+25, this.x+10, this.y+35);
-        line(this.x+5, this.y+50,this.x+20,this.y-30);
-        line(this.x+20,this.y-30,this.x+70,this.y-20);
-        line(this.x+70,this.y-20,this.x+55,this.y+50);
-        line(this.x+55,this.y+50,this.x+10,this.y+40);
-        noFill();
-        ellipse(this.x+37.5,this.y+15,40,40);
-        line(this.x+20,this.y+32.5,this.x+42.5,this.y-10);
-        line(this.x+42.5,this.y-10,this.x+47.5,this.y+37.5);
-        line(this.x+20,this.y+10,this.x+55,this.y+17.5);
 	}
 
 	moveMe(){
@@ -73,19 +67,33 @@ class Avatar {
     if (keyIsDown(DOWN_ARROW)) { // if you hold the down arrow, move down by speed
         this.y += this.speed;
     }
-    if (keyIsDown(LEFT_ARROW)) {
-      this.x -= this.speed;
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.x += this.speed;
-    }
 	}
 
   die(){
+    textSize(50);
+    fill(50)
+    stroke(10)
+    if (hits.length >= 5){
+      text("Game Over",155,200);
+
+      textSize(18)
+    }else if(hits.length===4){
+      text("Lives : 1",10,380);
+    }else if(hits.length===3){
+      text("Lives : 2",10,380);
+    }else if(hits.length===2){
+      text("Lives : 3",10,380);
+    }else if(hits.length===1){
+      text("Lives : 4",10,380);
+    }else if(hits.length===0){
+      text("Lives : 5",10,380)
+    }
+    }
+
 
   }
 
-}
+
 
 
 //ball class from which to create new balls with similar properties.
@@ -100,10 +108,10 @@ class Ball {
 
 	// draw a ball on the screen at x,y
 	drawBall(){
-    stroke(0);
-    strokeWeight(1);
-    fill("yellow");
-    ellipse(this.x,this.y,10,10);
+    	stroke(0);
+      strokeWeight(1);
+    	fill("red");
+		  triangle(this.x,this.y,this.x+15,this.y-5,this.x+15,this.y+5);
 	}
 
 	//update the location of the ball, so it moves across the screen
@@ -114,9 +122,14 @@ class Ball {
 
 	//if the ball hits the person, change the speed value to negative (send it in the opposite direction)
   	bounceBall(){
-    		if (this.x >= me.x-15 && this.x <= me.x+70 && this.y > me.y-40 && this.y < me.y+40){
+    		if (this.x >= me.x-15 && this.x <= me.x+15 && this.y > me.y-40 && this.y < me.y+40){
       			this.speed = -this.speed;
+
+            hits.push("hit");
+            background("red")
     		}
+
   	}
+
 
 }
