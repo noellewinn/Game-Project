@@ -75,7 +75,6 @@ class Avatar {
     stroke(10)
     if (hits.length >= 5){
       text("Game Over",155,200);
-
       textSize(18)
     }else if(hits.length===4){
       text("Lives : 1",10,380);
@@ -109,7 +108,7 @@ class Ball {
 	// draw a ball on the screen at x,y
 	drawBall(){
     	stroke(0);
-      strokeWeight(1);
+      strokeWeight(0);
     	fill("red");
 		  triangle(this.x,this.y,this.x+15,this.y-5,this.x+15,this.y+5);
 	}
