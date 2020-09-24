@@ -16,7 +16,7 @@ function setup() {
 }
 
 function draw(){
-	background(120);
+	background(0,0,10);
 
   me.drawMe();
   me.moveMe();
