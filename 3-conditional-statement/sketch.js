@@ -6,6 +6,13 @@ let me;
 
 let hits = [];
 
+let mySound;
+
+function preload(){
+  soundFormats('wav');
+  mySound = loadSound('wah.wav')
+}
+
 
 function setup() {
   createCanvas(600, 400);
@@ -16,7 +23,7 @@ function setup() {
 }
 
 function draw(){
-	background(0,0,10);
+	background(0,0,100);
 
   me.drawMe();
   me.moveMe();
@@ -47,7 +54,7 @@ class Avatar {
 	}
 
 	drawMe(){  // draw the running person
-    		stroke(200, 150,210);
+    		stroke(180);
         strokeWeight(5);
     		fill(180,200,250);
 		    ellipse(this.x,this.y,20,20);
@@ -123,9 +130,13 @@ class Ball {
   	bounceBall(){
     		if (this.x >= me.x-15 && this.x <= me.x+15 && this.y > me.y-40 && this.y < me.y+40){
       			this.speed = -this.speed;
+            mySound.setVolume(0.1);
+            mySound.play();
 
             hits.push("hit");
             background("red")
+
+
     		}
 
   	}
